@@ -2,7 +2,7 @@
 This package is for saucelabs users. It lets you upload files from your local computer to sauce storage. For more information about sauce storage, [please read here](https://wiki.saucelabs.com/display/DOCS/Temporary+Storage+Methods).
 
 * only proceed to upload if there is currently no build with the same name and hash on your sauce-storage
-* returns the string to use in your *app* capability ("sauce-storage:mybuild.apk>")
+* returns the string to use in your *app* capability ("sauce-storage:mybuild.apk")
 
 # Installation
 
