@@ -3,7 +3,7 @@ const crypto = require('crypto')
 const fs = require('fs')
 const https = require('https')
 
-const GET_BUILDS_TIMEOUT = 1000 * 5
+const GET_BUILDS_TIMEOUT = 1000 * 15
 const UPLOAD_BUILD_TIMEOUT = 1000 * 60 * 3
 
 class SauceStorage {
