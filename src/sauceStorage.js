@@ -56,7 +56,7 @@ class SauceStorage {
 			try {
 				fileStream = fs.createReadStream(buildPath)
 			} catch (e) {
-				reject(e)
+				return reject(e)
 			}
 			fileStream.on('error', err => reject(err))
 			fileStream.on('data', chunck => hash.update(chunck))
@@ -91,7 +91,7 @@ class SauceStorage {
 				})
 				.on('response', (res) => {
 					if (res.statusCode !== 200) {
-						reject(new Error(`Status = ${res.statusCode}`))
+						return reject(new Error(`Status = ${res.statusCode}`))
 					} else {
 						let buffer = Buffer.alloc(parseInt(res.headers['content-length']))
 						res
@@ -103,12 +103,12 @@ class SauceStorage {
 								try {
 									payload = JSON.parse(buffer.toString())
 								} catch (e) {
-									reject(e)
+									return reject(e)
 								}
 								if (payload.files) {
-									resolve(payload.files)
+									return resolve(payload.files)
 								} else {
-									reject(new Error('Payload does not have "file" property'))
+									return reject(new Error('Payload does not have "file" property'))
 								}
 							})
 							.on('close', () => {
@@ -134,7 +134,7 @@ class SauceStorage {
 				// Prepare the local file stream
 				buildStream = fs.createReadStream(buildPath)
 			} catch(e) {
-				reject(e)
+				return reject(e)
 			}
 
 			// Prepare the upload request
@@ -169,18 +169,18 @@ class SauceStorage {
 							try {
 								payload = JSON.parse(buffer.toString())
 							} catch(e) {
-								reject(e)
+								return reject(e)
 							}
 
 							if(res.statusCode !== 200) {
 								if(payload.errors) {
 									payload.statusCode = res.statusCode
-									reject(payload)
+									return reject(payload)
 								} else {
-									reject(new Error(`Upload failed with status ${res.statusCode}`))
+									return reject(new Error(`Upload failed with status ${res.statusCode}`))
 								}
 							} else {
-								resolve(payload)
+								return resolve(payload)
 							}
 						})
 				})
