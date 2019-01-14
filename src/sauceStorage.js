@@ -93,15 +93,15 @@ class SauceStorage {
 					if (res.statusCode !== 200) {
 						return reject(new Error(`Status = ${res.statusCode}`))
 					} else {
-						let buffer = Buffer.alloc(parseInt(res.headers['content-length']))
+						let buffer = ''
 						res
 							.on('data', (chunk) => {
-								buffer.write(chunk.toString('utf-8'))
+								buffer += chunk
 							})
 							.on('end', () => {
 								let payload
 								try {
-									payload = JSON.parse(buffer.toString())
+									payload = JSON.parse(buffer.toString('utf-8'))
 								} catch (e) {
 									return reject(e)
 								}
@@ -159,15 +159,15 @@ class SauceStorage {
 					reject(e)
 				})
 				.on('response', (res) => {
-					let buffer = Buffer.alloc(parseInt(res.headers['content-length']))
+					let buffer = ''
 					res
 						.on('data', (chunk) => {
-							buffer.write(chunk.toString('utf-8'))
+							buffer += chunk
 						})
 						.on('end', () => {
 							let payload
 							try {
-								payload = JSON.parse(buffer.toString())
+								payload = JSON.parse(buffer.toString('utf-8'))
 							} catch(e) {
 								return reject(e)
 							}
