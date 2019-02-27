@@ -26,6 +26,12 @@ storage.getAppCapabilityForBuild('./builds/myapp.apk')
 	})
 ```
 
+EU datacenter
+If you are running tests on the EU datacenter, you should provide the correct hostname when instanciating the class. [See saucelabs documentation.](https://wiki.saucelabs.com/display/DOCS/Sauce+Labs+European+Data+Center+Configuration+Information)
+```javascript
+const storage = new sauceStorage('mySauceUsername', 'mySauceAccessKey', 'eu-central-1.saucelabs.com')
+```
+
 For [webdriverio](http://webdriver.io) users, you may add the app capability using the onPrepare hook (which will wait for the promise to resolve, and hence can be async):
 ```javascript
 async function onPrepare (config, capabilities) {
