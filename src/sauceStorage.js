@@ -7,9 +7,10 @@ const GET_BUILDS_TIMEOUT = 1000 * 15
 const UPLOAD_BUILD_TIMEOUT = 1000 * 60 * 3
 
 class SauceStorage {
-	constructor(sauceUsername, sauceAccessKey) {
+	constructor(sauceUsername, sauceAccessKey, host = 'saucelabs.com') {
 		this.sauceUsername = sauceUsername
 		this.sauceAccessKey = sauceAccessKey
+		this.host = host
 	}
 
 	/**
@@ -73,7 +74,7 @@ class SauceStorage {
 	getOnlineBuilds() {
 		return new Promise((resolve, reject) => {
 			const req = https.get({
-				hostname: 'saucelabs.com',
+				hostname: this.host,
 				path: `/rest/v1/storage/${this.sauceUsername}`,
 				auth: `${this.sauceUsername}:${this.sauceAccessKey}`,
 			})
@@ -139,7 +140,7 @@ class SauceStorage {
 
 			// Prepare the upload request
 			const uploadRequest = https.request({
-				hostname: 'saucelabs.com',
+				hostname: this.host,
 				path: `/rest/v1/storage/${this.sauceUsername}/${buildName}?overwrite=true`,
 				method: 'POST',
 				headers: { 'content-type': 'application/octet-stream' },
